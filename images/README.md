@@ -43,7 +43,7 @@ Se detectó que el modelo correlacionó la ausencia de fondo natural —una cons
 
 Este hallazgo subraya la importancia de mantener una homogeneidad en el preprocesamiento de imágenes al integrar múltiples fuentes de datos para modelos de visión computacional en agricultura.
 
-![Mapas de explicabilidad mediante Attention Rollout en hojas de café](images/AttentionRollout_DINOV2.png)
+![Mapas de explicabilidad mediante Attention Rollout en hojas de café](images/Attention_Rollout_DINOv2.png)
 
 Este conjunto de datos permite que el modelo aprenda a identificar desde lesiones microscópicas iniciales hasta el daño estructural severo en el follaje del cultivo.
 
