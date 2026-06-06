@@ -3,7 +3,7 @@
 [![Python Version](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/release/python-3100/)
 [![PyTorch Version](https://img.shields.io/badge/PyTorch-2.0%2B-ee4c2c.svg)](https://pytorch.org/)
 
-[Frontend / Demo del Proyecto](https://roblero-gunn.github.io/Proyecto1_CoffeeLeafs/)
+[Frontend / Demo del Proyecto](https://huggingface.co/spaces/YAFIS18/clasificador_enfermedades_cafe_fc)
 
 
 ## Documentación:
