@@ -26,8 +26,8 @@ El objetivo principal es desarrollar un sistema robusto para la clasificación d
 El corpus utilizado para el entrenamiento y evaluación de los modelos en este estudio se denomina **Dataset_rocole_Maestro**. Este conjunto fue construido mediante la integración estratégica de dos fuentes de datos independientes para abordar una clasificación multiclase de cuatro categorías exclusivas.
 
 ### **Composición y Procesamiento del Dataset**
-- **Fuente 1 (Dataset de origen peruano):** Se extrajo una muestra perfectamente balanceada de 500 imágenes para cada una de las siguientes clases: **Sanas**, **Ojo de Gallo** y **Roya**.
-- **Fuente 2 (Dataset RoCoLe original):** Se seleccionaron exclusivamente las muestras correspondientes a la plaga de **Araña Roja**. A este grupo específico de imágenes se le aplicó un tratamiento topológico de segmentación utilizando el modelo fundacional **SAM-2** (Segment Anything Model 2) para eliminar el ruido ambiental y aislar únicamente el tejido de la hoja.
+- **Fuente 1 (Coffee leaf dataset by phytosanitary clas):** Se extrajo una muestra perfectamente balanceada de 500 imágenes para cada una de las siguientes clases: **Sanas**, **Ojo de Gallo** y **Roya**.
+- **Fuente 2 (RoCoLe: A Robusta Coffee Leaf Images Dataset):** Se seleccionaron exclusivamente las muestras correspondientes a la plaga de **Araña Roja**. A este grupo específico de imágenes se le aplicó un tratamiento topológico de segmentación utilizando el modelo fundacional **SAM-2** (Segment Anything Model 2) para eliminar el ruido ambiental y aislar únicamente el tejido de la hoja. Se extrajeron 155 imágenes exactamente.
 
 ### **Partición de Datos**
 Para garantizar una evaluación estadística imparcial y una estricta reproducibilidad, se aplicó una semilla (`seed = 42`) para particionar el corpus maestro consolidado en una proporción de **70/10/20**, resultando en tres subconjuntos completamente disjuntos:
@@ -43,7 +43,7 @@ Se detectó que el modelo correlacionó la ausencia de fondo natural —una cons
 
 Este hallazgo subraya la importancia de mantener una homogeneidad en el preprocesamiento de imágenes al integrar múltiples fuentes de datos para modelos de visión computacional en agricultura.
 
-![Ejemplo de mapas de activación Grad-CAM en hojas de café](images/Grad-CAM.png)
+![Mapas de explicabilidad mediante Attention Rollout en hojas de café](images/AttentionRollout_DINOV2.png)
 
 Este conjunto de datos permite que el modelo aprenda a identificar desde lesiones microscópicas iniciales hasta el daño estructural severo en el follaje del cultivo.
 
