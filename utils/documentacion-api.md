@@ -1,83 +1,99 @@
-# Documentación General de la API - Clasificador Fitosanitario
+# Documentación General de la API - Clasificador Fitosanitario (ONNX)
 
 ## Tabla de Contenidos
 1. [Introducción](#introducción)
 2. [Requisitos Previos](#requisitos-previos)
-3. [Instalación](#instalación)
-   - [Clonación del Repositorio](#clonación-del-repositorio)
-   - [Configuración del Entorno](#configuración-del-entorno)
+3. [Instalación y Configuración](#instalación-y-configuración)
 4. [Uso de Docker](#uso-de-docker)
-   - [Construcción de la Imagen](#construcción-de-la-imagen)
-   - [Ejecución del Contenedor](#ejecución-del-contenedor)
-   - [Detener y Eliminar Contenedores](#detener-y-eliminar-contenedores)
 5. [Endpoints de la API](#endpoints-de-la-api)
    - [POST /predict](#post-predict)
-6. [Manejo de Errores](#manejo-de-errores)
+6. [Monitoreo y Telemetría (MLOps)](#monitoreo-y-telemetría-mlops)
+7. [Manejo de Errores](#manejo-de-errores)
 
 ---
 
 ## Introducción
-Esta API permite la clasificación de imágenes de hojas de café para detectar su estado fitosanitario. Utiliza modelos avanzados de aprendizaje profundo construidos en PyTorch (ResNet-18 y DINOv2) para ofrecer predicciones precisas entre cuatro categorías: Sanas, Ojo de Gallo, Roya y Araña Roja. Además, integra técnicas de explicabilidad visual (Grad-CAM y Attention Rollout) que resaltan las lesiones o regiones de interés que fundamentan la predicción del modelo.
-
-[Ir a la documentación interactiva de la API (Swagger UI)](#) *(Nota: Actualizar este enlace cuando la API esté desplegada en producción)*
+Esta API permite la clasificación automatizada de hojas de café para la detección de enfermedades (Sanas, Ojo de Gallo, Roya y Araña Roja). La arquitectura está impulsada por un motor de inferencia de alto rendimiento (**ONNX Runtime**), garantizando baja latencia computacional. Además, cuenta con filtros de distribución (*Out-of-Distribution*) y un sistema de monitoreo en tiempo real para detectar la degradación del modelo (*Data Drift*).
 
 ---
 
 ## Requisitos Previos
-- Docker instalado.
-- Git instalado.
-- Python 3.11 o superior (para desarrollo local sin Docker).
-- Configuración básica del sistema operativo.
+- Docker y Git instalados.
+- Python 3.11 o superior (para desarrollo local).
 
-## Instalación
+## Instalación y Configuración
 
 ### Clonación del Repositorio
-Clona el repositorio del proyecto en tu máquina local:
 ```bash
 git clone [https://github.com/roblero-gunn/Proyecto1_CoffeeLeafs.git](https://github.com/roblero-gunn/Proyecto1_CoffeeLeafs.git)
-cd Proyecto1_CoffeeLeaves
+cd Proyecto1_CoffeeLeafs
 ```
 
-## Carga de los Modelos
-Los archivos de los pesos entrenados para ResNet-18 y DINOv2 son pesados y no están incluidos directamente en el control de versiones del repositorio para evitar saturación. Puedes descargarlos desde el siguiente enlace:
+## Carga del Modelo Optimizado
+El motor de la API requiere el grafo computacional exportado en formato ONNX.
 
-Descargar pesos de los modelos (.pth) ResNet18: (https://drive.google.com/file/d/1Ddo51OuIg4se2ZzWR4_pBz-znlFwXg9l/view?usp=sharing)
-DINOv2: (https://drive.google.com/file/d/1s74dvTnLFJh6c5V9AnqAh4gwaXpjrOwG/view?usp=drive_link)
+Descarga el archivo de pesos: Descargar modelo_optimizado.onnx (app/modelo_optimizado.onnx).
 
-Por favor, asegúrate de guardar los archivos .pth en el directorio principal de la aplicación (ej. /app/models/) para que la API pueda instanciarlos correctamente al arrancar.
+Guarda el archivo exactamente en la ruta app/modelo_optimizado.onnx.
 
 ## Uso de Docker
 Construcción de la Imagen
-Construye la imagen de Docker empaquetando la API y sus dependencias:
 ```bash
-docker build -t api-coffee-leafs
+docker build -t api-coffee-leafs .
 ```
-
-## Ejecución del Contenedor
-Inicia el contenedor exponiendo el puerto configurado:
+Ejecución del Contenedor
 ```bash
 docker run -d -p 80:80 api-coffee-leafs
 ```
-Una vez en ejecución, puedes acceder a http://localhost:80/docs para interactuar directamente con la documentación autogenerada (FastAPI/Swagger).
-
-## Detener y Eliminar Contenedores
-Para detener el servicio:
-``` bash
-docker stop <id_contenedor>
-```
-Para limpiar tu entorno eliminando el contenedor:
-``` bash
-docker rm <id_contenedor>
-```
+Accede a http://localhost:80/docs para interactuar con la interfaz Swagger UI generada automáticamente por FastAPI.
 
 ## Endpoints de la API
-### POST /predict
-**Descripción:** Recibe una fotografía de una hoja de café y devuelve el diagnóstico fitosanitario junto con su mapa de explicabilidad espacial.
 
-**Request Body:**
+### POST /predict
+**Descripción:** Recibe un archivo de imagen directo (fotografía de la hoja) y devuelve el diagnóstico fitosanitario junto con la telemetría del sistema.
+
+**Formato de Petición:** multipart/form-data
+
+Parámetro: file (Archivo binario de imagen: .jpg, .png, etc.)
+
+Ejemplo de Solicitud con cURL:
+
+```bash
+curl -X POST "http://localhost:80/predict" \
+  -H "accept: application/json" \
+  -H "Content-Type: multipart/form-data" \
+  -F "file=@hoja_sospechosa.jpg"
+```
+
+Ejemplo de Respuesta (Diagnóstico Exitoso):
+
 ``` json
 {
-    "image_base64": "/9j/4AAQSkZJRgAB...",
-    "model_type": "dinov2" 
+  "clase_index": 3,
+  "diagnostico": "Araña Roja",
+  "confianza": 0.9854,
+  "monitoreo_ops": "Sistema Estable"
 }
 ```
+Ejemplo de Respuesta (Filtro Out-of-Distribution Activado):
+Ocurre cuando el usuario sube una imagen que no corresponde al entorno agrícola entrenado (confianza < 45%).
+
+``` json
+{
+  "clase_index": -1,
+  "diagnostico": "⚠️ Objeto no reconocido. Sube una foto clara de una hoja de café.",
+  "confianza": 0.2312
+}
+```
+
+## Monitoreo y Telemetría (MLOps)
+La API cuenta con un módulo de estabilidad operativa que evalúa de forma continua el rendimiento del modelo en producción:
+
+Prevención de Errores (OOD): Si la confianza máxima extraída mediante Softmax no supera el 0.45, la API bloquea el diagnóstico para evitar falsos positivos.
+
+Detección de Data Drift: Cada predicción exitosa alimenta el archivo log drift_log.csv. El sistema calcula una media móvil con las últimas 10 inferencias. Si la media de confianza del lote cae por debajo del 75%, el estado de monitoreo_ops advertirá de una posible degradación en la captura de imágenes, permitiendo tomar acciones correctivas inmediatas en campo.
+
+## Manejo de Errores
+400 (Bad Request): El cliente envió un archivo que no es una imagen válida.
+
+500 (Internal Server Error): Fallo en el pipeline de inferencia interno (ej. modelo ONNX no encontrado o corrupto).
