@@ -9,7 +9,7 @@
 ## Documentación:
 
 1. [Memoria Técnica](dev_model/MEMORIA-TECNICA.md)
-2. [Documentación API](app/documentacion-api.md)
+2. [Documentación API](utils/documentacion-api.md)
 
 ## Contexto
 
@@ -34,14 +34,40 @@ El conjunto de datos con el que se trabajó de manera general, se denominó  **D
 para abordar una clasificación multiclase de cuatro categorías exclusivas.
 
 ### **Composición y Procesamiento del Dataset**
-- **Fuente 1 (Coffee leaf dataset by phytosanitary clas):** Se extrajo una muestra perfectamente balanceada de 500 imágenes para cada una de las siguientes clases: **Sanas**, **Ojo de Gallo** y **Roya**.
-- **Fuente 2 (RoCoLe: A Robusta Coffee Leaf Images Dataset):** Se seleccionaron exclusivamente las muestras correspondientes a la plaga de **Araña Roja**. A este grupo específico de imágenes se le aplicó un tratamiento topológico de segmentación utilizando el modelo fundacional **SAM-2** (Segment Anything Model 2) para eliminar el ruido ambiental y aislar únicamente el tejido de la hoja. Se extrajeron 155 imágenes exactamente.
+- **Fuente 1 (Coffee leaf dataset by phytosanitary clas):** Se extrajo una muestra perfectamente balanceada de 500 imágenes para cada una de las siguientes clases: **Sanas**, **Ojo de
+Gallo** y **Roya**. Las imágenes contenidas se ve de la siguiente manera:
+<img src="images/Roya 27.jpg" alt="Roya" width="400">
+
+- **Fuente 2 (RoCoLe: A Robusta Coffee Leaf Images Dataset):** Se seleccionaron exclusivamente las muestras correspondientes a la plaga de **Araña Roja** . Se extrajeron 155 imágenes
+exactamente. Además, comparándolo con el primer Dataset, estas imágenes fueron tomadas directamente en los cafetales y por lo tanto, contienen
+variaciones de iluminación y estan acompañadas de más hojas y granos de café. A continuación un ejemplo:
+<img src="images/ROYA2_ROCOLE.jpg" alt="Roya" width="400">
+
+Dada la naturaleza del contenido a este grupo de imágenes se le aplicó segmentación con el modelo SAM-2 (Segment Anything Model 2) para eliminar el fondo y aislar únicamente la hoja:
+<table>
+  <tr>
+    <td align="center"><b>Imagen Original</b></td>
+    <td align="center"><b>Segmentación con SAM-2</b></td>
+  </tr>
+  <tr>
+    <td><img src="images/ArañaRoja_C2P12E2.jpg" alt="Araña Roja" height="300"></td>
+    <td><img src="images/ArañaRoja_autoclean_C2P12E2.jpg" alt="Araña Roja SAM-2" height="300"></td>
+  </tr>
+</table>
 
 ### **Partición de Datos**
-Para garantizar una evaluación estadística imparcial y una estricta reproducibilidad, se aplicó una semilla (`seed = 42`) para particionar el corpus maestro consolidado en una proporción de **70/10/20**, resultando en tres subconjuntos completamente disjuntos:
+Para garantizar una evaluación estadística imparcial y una estricta reproducibilidad, se aplicó una semilla (`seed = 42`) para particionar el Dataset consolidado en una proporción de **70/10/20**, resultando en tres subconjuntos completamente disjuntos:
 - **Entrenamiento:** 1,158 muestras.
 - **Validación:** 166 muestras.
 - **Pruebas:** 331 muestras.
+
+### ResNet18 **(CNN)**
+
+El primero modelo con el que se trabajó fue ResNet18, a este se le hizo Data Augmentation durante el entrenamiento
+
+
+
+
 
 ## Análisis Exploratorio y Limitaciones (Shortcut Learning)
 
