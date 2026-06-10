@@ -64,9 +64,6 @@ Para garantizar una evaluación estadística imparcial y una estricta reproducib
 En cuanto a su arquitectura adaptada para este proyecto, la capa original diseñada para clasificar 1000 categorías fue reemplazada por un clasificador lineal de 
 512 características de entrada y 4 salidas. Con esto, de los 11, 178, 564 parámetros totales de la red, únicamente 2, 052 (el 0.02 %) se mantuvieron entrenables.
 
-dev_mode/ResNet18_DataAugmentation.ipynb
-
-
 ## DINOv2 (ViT)
 DINOv2 (desarrollado por Meta) es un modelo fundacional de visión computacional de código abierto basado en la arquitectura Vision Transformer (ViT).
 Para este proyecto se usó la variante ViT-S/14 (Vision Transformer - Small / Patch 14).
