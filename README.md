@@ -55,19 +55,26 @@ Dada la naturaleza del contenido a este grupo de imágenes se le aplicó segment
   </tr>
 </table>
 
-### **Partición de Datos**
+## **Partición de Datos**
 Para garantizar una evaluación estadística imparcial y una estricta reproducibilidad, se aplicó una semilla (`seed = 42`) para particionar el Dataset consolidado en una proporción de **70/10/20**, resultando en tres subconjuntos completamente disjuntos:
 - **Entrenamiento:** 1,158 muestras.
 - **Validación:** 166 muestras.
 - **Pruebas:** 331 muestras.
 
-### ResNet18 **(CNN)**
+## **ResNet18 (CNN)**
 
-El primero modelo con el que se trabajó fue ResNet18, a este se le hizo Data Augmentation durante el entrenamiento
-
-
+/dev_mode/ResNet18_DataAugmentation.ipynb
 
 
+## DINOv2 (ViT)
+DINOv2 (desarrollado por Meta) es un modelo fundacional de visión computacional de código abierto basado en la arquitectura Vision Transformer (ViT).
+Para este proyecto se usó la variante ViT-S/14 (Vision Transformer - Small / Patch 14).
+/dev_model/DINOv2.ipynb
+
+## Comparación de resultado 
+
+ResNet-18 & 96.98 & 0.97 & $\approx$ 2M \\
+DINOv2 (ViT) & \textbf{99.4} $\pm$ 0.0 & \textbf{0.99} & $\approx$ 21M \\
 
 ## Análisis Exploratorio y Limitaciones (Shortcut Learning)
 
