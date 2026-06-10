@@ -14,8 +14,7 @@
 ## Contexto
 
 El café es un pilar agrícola y económico fundamental. En México, el 11º productor mundial impulsado por estados como Chiapas, Veracruz y Puebla, este cultivo es vital para el sector 
-agroindustrial. Sin embargo, su rentabilidad está constantemente amenazada por plagas y enfermedades de rápida propagación —como la Roya, la Araña roja, el Ojo de Gallo, la Mancha de 
-Hierro y el Minador de la hoja—, las cuales son capaces de devastar plantaciones enteras en cuestión de semanas y causar severas pérdidas económicas a los agricultores.
+agroindustrial. Sin embargo, su rentabilidad está constantemente amenazada por plagas y enfermedades de rápida propagación —como la Roya, la Araña roja, el Ojo de Gallo, la Mancha de Hierro y el Minador de la hoja—, las cuales son capaces de devastar plantaciones enteras en cuestión de semanas y causar severas pérdidas económicas a los agricultores.
 
 En este proyecto, se implementan y comparan dos arquitecturas para la clasificación automática de enfermedades en imágenes de hojas de café. La **CNN ResNet-18** y un modelo de **Vision 
 Transformer DINOv2**. Con el uso de estas herramientas de visión computacion, se busca lograr una alta precisión en el diagnóstico y proporcionar una herramienta de apoyo tecnológico 
@@ -87,10 +86,10 @@ encendieron con más fuerza al detectar, por ejemplo, la Roya. Genera un mapa de
 - Attention Rollout: Dado que los Transformers no usan filtros convolucionales, Grad-CAM no funciona bien aquí. Estas redes usan mecanismos de "Auto-Atención" (cuadritos de 14x14 píxeles que se comunican entre sí). La técnica de Rollout rastrea cómo fluye esa información conectando la atención de los cuadritos capa por capa, desde la entrada hasta la predicción final. El resultado es un mapa de calor extremadamente nítido que a menudo logra dibujar la silueta exacta del daño celular de la Araña Roja sin iluminar el tejido sano alrededor.
 
 Los resultados usando Grad-CAM en ResNet18 y DINOv2 además de Grad-CAM++ en la última capa de ambos modelos se muestran a continuación. Es un lote de 5 batches:
-\imagen
+![Mapas de explicabilidad mediante Attention Rollout en hojas de café](images/GradCAMBatch5.png)
 
 Ya que los resultados no fueron satisfactorios, se decidió usar Grad-CAM++ en ResNet 18 pero revisando sus diferente capas:
-\
+![Mapas de explicabilidad mediante Attention Rollout en hojas de café](images/GradCAM_ResNet18Layers.png)
 
 Como DINOv2 es un ViT, la mejor maner de ver el mapa de calor fue usando Attention Rollout:
 ![Mapas de explicabilidad mediante Attention Rollout en hojas de café](images/Attention_Rollout_DINOv2.png)
@@ -124,3 +123,4 @@ Este hallazgo subraya la importancia de mantener una homogeneidad en el preproce
 
 - [Base de Datos RoCoLe (Mendeley Data)](https://data.mendeley.com/datasets/c5yvn32dzg/2)
 - [Documentación DINOv2](https://github.com/facebookresearch/dinov2)
+- [App](https://huggingface.co/spaces/YAFIS18/clasificador_enfermedades_cafe_fc) 
