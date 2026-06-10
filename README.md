@@ -13,17 +13,25 @@
 
 ## Contexto
 
-La caficultura es una actividad agrícola fundamental a nivel global, pero se enfrenta a constantes amenazas por diversas enfermedades fitosanitarias y plagas, tales como la roya y la araña roja. La detección temprana de estas afectaciones es crucial para evitar pérdidas masivas en las cosechas y aplicar tratamientos focalizados. Sin embargo, la identificación visual de las lesiones en las hojas requiere experiencia agronómica especializada.
+El café es un pilar agrícola y económico fundamental. En México, el 11º productor mundial impulsado por estados como Chiapas, Veracruz y Puebla, este cultivo es vital para el sector 
+agroindustrial. Sin embargo, su rentabilidad está constantemente amenazada por plagas y enfermedades de rápida propagación —como la Roya, la Araña roja, el Ojo de Gallo, la Mancha de 
+Hierro y el Minador de la hoja—, las cuales son capaces de devastar plantaciones enteras en cuestión de semanas y causar severas pérdidas económicas a los agricultores.
 
-En este proyecto, se implementan y comparan arquitecturas avanzadas de aprendizaje profundo —específicamente una **red neuronal convolucional (ResNet-18)** y un modelo de **Vision Transformer (DINOv2)**— para la clasificación automática de enfermedades en imágenes de hojas de café. Con el uso de estas herramientas de visión computacional, se busca lograr una alta precisión en el diagnóstico y proporcionar una herramienta de apoyo tecnológico para los productores agrícolas.
+En este proyecto, se implementan y comparan dos arquitecturas para la clasificación automática de enfermedades en imágenes de hojas de café. La **CNN ResNet-18** y un modelo de **Vision 
+Transformer DINOv2**. Con el uso de estas herramientas de visión computacion, se busca lograr una alta precisión en el diagnóstico y proporcionar una herramienta de apoyo tecnológico 
+para los productores agrícolas.
 
 ## Objetivo del Proyecto
 
-El objetivo principal es desarrollar un sistema robusto para la clasificación de imágenes de hojas de café, identificando su estado de salud (sanas) o el tipo de enfermedad presente. Además, se busca dotar de explicabilidad a las predicciones de los modelos mediante la técnica de mapas de activación **Grad-CAM**, resaltando visualmente las lesiones y regiones específicas de la hoja que determinan el resultado de la red.
+Los objetivos de este trabajo se centran en identificar patrones sutiles de enfermedad (como el daño por ácaros u hongos) de forma robusta frente a fondos complejos y variaciones de luz, 
+logrando superar el 92% de precisión sobre datos no vistos. Además, se busca aplicar técnicas de interpretabilidad para comprender visualmente en qué áreas de la imagen se basa el modelo 
+para tomar sus decisiones. Finalmente, el proyecto pretende desplegar este sistema en dispositivos móviles, brindando a los agricultores una herramienta para optimizar el uso de pesticidas 
+y mitigar sus pérdidas económicas.
 
 ## Descripción General del Conjunto de Datos
 
-El corpus utilizado para el entrenamiento y evaluación de los modelos en este estudio se denomina **Dataset_rocole_Maestro**. Este conjunto fue construido mediante la integración estratégica de dos fuentes de datos independientes para abordar una clasificación multiclase de cuatro categorías exclusivas.
+El conjunto de datos con el que se trabajó de manera general, se denominó  **Dataset_rocole_Maestro**. El Dataset fue construido mediante la combinación de dos fuentes de datos distintas
+para abordar una clasificación multiclase de cuatro categorías exclusivas.
 
 ### **Composición y Procesamiento del Dataset**
 - **Fuente 1 (Coffee leaf dataset by phytosanitary clas):** Se extrajo una muestra perfectamente balanceada de 500 imágenes para cada una de las siguientes clases: **Sanas**, **Ojo de Gallo** y **Roya**.
